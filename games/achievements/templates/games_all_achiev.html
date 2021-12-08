@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Game-achievement detail
+{% endblock %}
+
+
+{% block content %}
+<h1>All achievements</h1>
+<ul>
+    {% for achievement in achievements %}
+    <li>
+        <p>
+            {{ achievement.completed }} {{ achievement.name }}
+        </p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
