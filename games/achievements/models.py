@@ -14,7 +14,7 @@ class Achievement(Model):
     completed = BooleanField(default=False)
     name = CharField(max_length=128)
     game = ForeignKey(Game, on_delete=CASCADE)
-    image = ImageField(blank=True, null=True, upload_to=f'images/')
+    image = ImageField(blank=True, null=True)
     link = URLField(null=True, blank=True)
     description = TextField(null=True, blank=True)
     slug = SlugField(max_length=128, unique=True)

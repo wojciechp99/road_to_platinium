@@ -1,19 +1,57 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-Game-achievement detail
+Games
 {% endblock %}
 
 
 {% block content %}
-<h1>All achievements</h1>
-<ul>
+<h1>{% with achievement=achievements|first %} {{ achievement.game }}{% endwith %}</h1>
+<hr>
+<h2>Unfinished Achievements:</h2>
+<br>
+<!--<ul>-->
+<!--    {% for achievement in achievements %}-->
+<!--    {% if not achievement.completed %}-->
+<!--    <li>-->
+<!--        <p>-->
+<!--            {{ achievement.name }} {{achievement.image}}-->
+<!--            <img src="static/images/giantdad.png">-->
+<!--        </p>-->
+<!--    </li>-->
+<!--    {% endif %}-->
+<!--    {% endfor %}-->
+<!--</ul>-->
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col" style="text-align: center; vertical-align: middle;">#</th>
+        <th scope="col" style="text-align: center; vertical-align: middle;">Image</th>
+        <th scope="col" style="text-align: center; vertical-align: middle;">Achievement name</th>
+        <th scope="col" style="text-align: center; vertical-align: middle;">Is completed</th>
+        <th scope="col" style="text-align: center; vertical-align: middle;">Edit</th>
+        <th scope="col" style="text-align: center; vertical-align: middle;">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
     {% for achievement in achievements %}
-    <li>
-        <p>
-            {{ achievement.completed }} {{ achievement.name }}
-        </p>
-    </li>
+    <tr>
+        <th style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</th>
+        <td style="text-align: center; vertical-align: middle;"><img src="{{ achievement.image.url }}"></td>
+        <td style="text-align: center; vertical-align: middle;">{{ achievement.name }}</td>
+        <td style="text-align: center; vertical-align: middle;">{{ achievement.completed }}</td>
+        <td style="text-align: center; vertical-align: middle;">
+            <a class="btn btn-primary" href="#">Edit</a>
+        </td>
+        <td style="text-align: center; vertical-align: middle;">
+            <a class="btn btn-danger" href="#">Delete</a>
+        </td>
+    </tr>
     {% endfor %}
-</ul>
+    </tbody>
+</table>
+
 {% endblock %}
