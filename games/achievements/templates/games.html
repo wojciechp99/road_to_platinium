@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Games
+{% endblock %}
+
+
+{% block content %}
+<h1>All games</h1>
+<ul>
+    {% for game in games %}
+    <li>
+        <p>
+            <a href="#">{{ game.name }}</a> - ({{ finished }}/{{ achievements }}) Achievements finished
+        </p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
