@@ -4,12 +4,14 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView
 
 from .models import Game, Achievement
+from .forms import AchievementForm
 
 
 class AchievementUpdateView(UpdateView):
     template_name = 'forms.html'
     model = Achievement
-    fields = '__all__'
+    form_class = AchievementForm
+    # fields = '__all__'
     success_url = reverse_lazy('index')
 
 

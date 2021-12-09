@@ -27,7 +27,13 @@ Games
     {% for achievement in achievements %}
     <tr>
         <th style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</th>
-        <td style="text-align: center; vertical-align: middle;"><img src="{{ achievement.image.url }}"></td>
+        <td style="text-align: center; vertical-align: middle;">
+            {% if achievement.image %}
+                <img src="{{ achievement.image.url }}" width="64" height="64">
+            {% else %}
+                <img src="#">
+            {% endif %}
+        </td>
         <td style="text-align: center; vertical-align: middle;">{{ achievement.name }}</td>
         <td style="text-align: center; vertical-align: middle;">
             {% if achievement.completed %}
@@ -37,7 +43,7 @@ Games
             {% endif %}
         </td>
         <td style="text-align: center; vertical-align: middle;">
-            <a class="btn btn-primary" href="#">Edit</a>
+            <a class="btn btn-primary" href="{% url 'achiev-update' pk=achievement.id %}">Edit</a>
         </td>
         <td style="text-align: center; vertical-align: middle;">
             <a class="btn btn-danger" href="#">Delete</a>
