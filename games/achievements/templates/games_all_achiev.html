@@ -29,12 +29,19 @@ Games
         <th style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</th>
         <td style="text-align: center; vertical-align: middle;">
             {% if achievement.image %}
-                <img src="{{ achievement.image.url }}" width="64" height="64">
+            <img src="{{ achievement.image.url }}" width="64" height="64">
             {% else %}
-                <img src="#">
+                {% if achievement.link %}
+                    <img src="{{ achievement.link }}">
+                {% else %}
+                    <img src="#">
+                {% endif %}
             {% endif %}
         </td>
-        <td style="text-align: center; vertical-align: middle;">{{ achievement.name }}</td>
+        <td style="text-align: center; vertical-align: middle;">
+            <a href="{% url 'achiev-detail' achievement.id  %}">{{ achievement.name }}
+            </a>
+        </td>
         <td style="text-align: center; vertical-align: middle;">
             {% if achievement.completed %}
             <a class="btn btn-success" href="{% url 'change-status' achievement.pk %}">Finished</a>

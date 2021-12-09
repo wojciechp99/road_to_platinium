@@ -1,10 +1,16 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, DetailView
 
 from .models import Game, Achievement
 from .forms import AchievementForm
+
+
+class AchievementDetailView(DetailView):
+    template_name = 'achievement_detail.html'
+    model = Achievement
+    context_object_name = 'achievement'
 
 
 class AchievementUpdateView(UpdateView):
