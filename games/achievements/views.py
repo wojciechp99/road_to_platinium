@@ -43,10 +43,14 @@ def upload_to_database(request):
     import requests
 
     STEAM_KEY = "0"  # for now key is stored as value
-    GAME_ID = "211420"  # page for obtaining game id: https://steamdb.info/ , for now also stored as value
+    GAME_ID = "211420"  # for now also stored as value
 
     get_api = requests.get(
         f"https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v0002/?key={STEAM_KEY}&appid={GAME_ID}&l=english&format=json")
+
+    if get_api.status_code != 200:
+        return render(request, template_name='status_code.html', context={'status_code': get_api.status_code})
+
     achievements = (get_api.json()['game']["availableGameStats"]["achievements"])
     game = Game.objects.get(name="Dark Souls")
 
@@ -66,6 +70,10 @@ def upload_to_database(request):
                                    slug=slugify(index["displayName"]))
 
     return render(request, template_name='games_all_achiev.html', context={'achievements': Achievement.objects.all()})
+
+
+def get_achievements(request):
+    return render(request, template_name="get_achievements.html")
 
 
 def games(request):

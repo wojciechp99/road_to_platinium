@@ -7,7 +7,19 @@ Games
 
 
 {% block content %}
-<h1>{% with achievement=achievements|first %} {{ achievement.game }}{% endwith %}</h1>
+<div class="container">
+
+        <div class="col-sm-4">
+            <h1>
+                {% with achievement=achievements|first %} {{ achievement.game }}{% endwith %}
+            </h1>
+        </div>
+        <div class="col-sm-4">
+            <a class="btn btn-primary" href="#">Upload achievements from
+                Steam</a>
+        </div>
+    </div>
+
 <hr>
 <h2>Unfinished Achievements:</h2>
 <br>
@@ -19,8 +31,8 @@ Games
         <th scope="col" style="text-align: center; vertical-align: middle;">Image</th>
         <th scope="col" style="text-align: center; vertical-align: middle;">Achievement name</th>
         <th scope="col" style="text-align: center; vertical-align: middle;">Is completed</th>
-        <th scope="col" style="text-align: center; vertical-align: middle;">Edit</th>
-        <th scope="col" style="text-align: center; vertical-align: middle;">Delete</th>
+        <th scope="col" style="text-align: center; vertical-align: middle;">Description</th>
+<!--        <th scope="col" style="text-align: center; vertical-align: middle;">Delete</th>-->
     </tr>
     </thead>
     <tbody>
@@ -31,11 +43,11 @@ Games
             {% if achievement.image %}
             <img src="{{ achievement.image.url }}" width="64" height="64">
             {% else %}
-                {% if achievement.link %}
-                    <img src="{{ achievement.link }}">
-                {% else %}
-                    <img src="#">
-                {% endif %}
+            {% if achievement.link %}
+            <img src="{{ achievement.link }}">
+            {% else %}
+            <img src="#">
+            {% endif %}
             {% endif %}
         </td>
         <td style="text-align: center; vertical-align: middle;">
@@ -50,11 +62,12 @@ Games
             {% endif %}
         </td>
         <td style="text-align: center; vertical-align: middle;">
-            <a class="btn btn-primary" href="{% url 'achiev-update' pk=achievement.id %}">Edit</a>
+            {{ achievement.description }}
+<!--            <a class="btn btn-primary" href="{% url 'achiev-update' pk=achievement.id %}">Edit</a>-->
         </td>
-        <td style="text-align: center; vertical-align: middle;">
-            <a class="btn btn-danger" href="#">Delete</a>
-        </td>
+<!--        <td style="text-align: center; vertical-align: middle;">-->
+<!--            <a class="btn btn-danger" href="#">Delete</a>-->
+<!--        </td>-->
     </tr>
     {% endfor %}
     </tbody>
