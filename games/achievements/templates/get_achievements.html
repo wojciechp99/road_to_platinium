@@ -7,19 +7,21 @@ Games
 
 {% block content %}
 <h1>Get all achievements from steam</h1>
-<form>
-    <p>
+<form action="{% url 'upload-achievements' %}">
+    {% csrf_token %}
+    <div>
         <label for="game_id">Game id:
             <input type="text" id="game_id" name="game_id" placeholder="Game id required" required/>
         </label>
         <h6>To get id for specified game go <a href="https://steamdb.info/">here</a></h6>
-    </p>
-    <p>
+    </div>
+    <br>
+    <div>
         <label for="steam_key">Steam key:
             <input type="text" id="steam_key" name="steam_key" placeholder="Steam key required" required/>
         </label>
-        <h6>To get steam key go <a href="https://steamcommunity.com/dev/revokekey">here</a></h6>
-    </p>
+        <h6>To get steam key go <a href="https://steamcommunity.com/dev/apikey">here</a></h6>
+    </div>
     <input type="submit" value="Submit" class="btn btn-primary">
 </form>
 {% endblock %}

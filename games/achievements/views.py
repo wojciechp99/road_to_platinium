@@ -42,8 +42,8 @@ def upload_to_database(request):
     from django.utils.text import slugify
     import requests
 
-    STEAM_KEY = "0"  # for now key is stored as value
-    GAME_ID = "211420"  # for now also stored as value
+    STEAM_KEY = request.GET.get('steam_key')
+    GAME_ID = request.GET.get('game_id')
 
     get_api = requests.get(
         f"https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v0002/?key={STEAM_KEY}&appid={GAME_ID}&l=english&format=json")
@@ -54,20 +54,22 @@ def upload_to_database(request):
     achievements = (get_api.json()['game']["availableGameStats"]["achievements"])
     game = Game.objects.get(name="Dark Souls")
 
+    from django.core.exceptions import ObjectDoesNotExist
     for index in achievements:
-        if Achievement.objects.get(name=index["displayName"]):
-            continue
+        try:
+            if Achievement.objects.get(name=index["displayName"]):
+                continue
+        except ObjectDoesNotExist:
+            if index['hidden'] == 0:
+                description = index['description']
+            else:
+                description = "Description for this achievement is hidden"
 
-        if index['hidden'] == 0:
-            description = index['description']
-        else:
-            description = "Description for this achievement is hidden"
-
-        Achievement.objects.create(name=index["displayName"],
-                                   game=game,
-                                   link=index['icon'],
-                                   description=description,
-                                   slug=slugify(index["displayName"]))
+            Achievement.objects.create(name=index["displayName"],
+                                       game=game,
+                                       link=index['icon'],
+                                       description=description,
+                                       slug=slugify(index["displayName"]))
 
     return render(request, template_name='games_all_achiev.html', context={'achievements': Achievement.objects.all()})
 

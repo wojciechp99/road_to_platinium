@@ -7,19 +7,23 @@ Games
 
 
 {% block content %}
-<div class="container">
-
-        <div class="col-sm-4">
-            <h1>
-                {% with achievement=achievements|first %} {{ achievement.game }}{% endwith %}
-            </h1>
-        </div>
-        <div class="col-sm-4">
-            <a class="btn btn-primary" href="#">Upload achievements from
-                Steam</a>
-        </div>
+<div>
+    <div>
+        <h1>
+            {% with achievement=achievements|first %}
+                {% if achievement.game %}
+                    {{ achievement.game }}
+                {% else %}
+                    Upload your achievements:
+                {% endif %}
+            {% endwith %}
+        </h1>
     </div>
-
+    <div>
+        <a class="btn btn-primary" href="{% url 'get_achievements' %}">Upload achievements from
+            Steam</a>
+    </div>
+</div>
 <hr>
 <h2>Unfinished Achievements:</h2>
 <br>
@@ -32,7 +36,6 @@ Games
         <th scope="col" style="text-align: center; vertical-align: middle;">Achievement name</th>
         <th scope="col" style="text-align: center; vertical-align: middle;">Is completed</th>
         <th scope="col" style="text-align: center; vertical-align: middle;">Description</th>
-<!--        <th scope="col" style="text-align: center; vertical-align: middle;">Delete</th>-->
     </tr>
     </thead>
     <tbody>
@@ -63,11 +66,7 @@ Games
         </td>
         <td style="text-align: center; vertical-align: middle;">
             {{ achievement.description }}
-<!--            <a class="btn btn-primary" href="{% url 'achiev-update' pk=achievement.id %}">Edit</a>-->
         </td>
-<!--        <td style="text-align: center; vertical-align: middle;">-->
-<!--            <a class="btn btn-danger" href="#">Delete</a>-->
-<!--        </td>-->
     </tr>
     {% endfor %}
     </tbody>

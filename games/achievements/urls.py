@@ -7,7 +7,7 @@ urlpatterns = [
     path('achiev/update/<int:pk>', AchievementUpdateView.as_view(), name='achiev-update'),
     path('<int:pk>/change-achievement-status', change_achievement_status, name='change-status'),
     path('achiev/<int:pk>', AchievementDetailView.as_view(), name='achiev-detail'),
-    path("api/upload-achievements", upload_to_database, name='upload-with-api'),
-    path('test', get_achievements, name='test'),
+    path("upload-achievements", upload_to_database, name='upload-achievements'),
+    path('get-achievements-from-steam', get_achievements, name='get_achievements'),
     path('', games, name='index'),
 ]
