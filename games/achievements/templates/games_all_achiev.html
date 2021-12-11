@@ -7,6 +7,20 @@ Games
 
 
 {% block content %}
+<script type="text/javascript">
+$(document).ready(function () {
+
+    if (localStorage.getItem("remember_scroll") != null) {
+        $(window).scrollTop(localStorage.getItem("remember_scroll"));
+    }
+
+    $(window).on("scroll", function() {
+        localStorage.setItem("remember_scroll", $(window).scrollTop());
+    });
+
+  });
+</script>
+
 <div>
     <div>
         <h1>
