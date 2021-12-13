@@ -71,7 +71,13 @@ def upload_to_database(request, name):
     if get_api.status_code != 200:
         return render(request, template_name='status_code.html', context={'status_code': get_api.status_code})
 
-    achievements = (get_api.json()['game']["availableGameStats"]["achievements"])
+    try:
+        achievements = (get_api.json()['game']["availableGameStats"]["achievements"])
+    except KeyError:
+        status = "Game doesn't have achievements on steam, sorry :("
+        return render(request, template_name='achievements_missing.html',
+                      context={'status': status})
+
     game = Game.objects.get(name=name)
 
     from django.core.exceptions import ObjectDoesNotExist
