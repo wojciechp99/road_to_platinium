@@ -11,7 +11,8 @@ Games
     {% for game in games %}
     <li>
         <p>
-            <a href="{% url 'achiev' pk=game.id %}">{{ game.name }}</a> - ({{ finished }}/{{ achievements }}) Achievements finished
+            <a href="{% url 'achiev' pk=game.id slug=game.slug %}">{{ game.name }}</a>
+<!--            - ({{ finished }}/{{ achievements }}) Achievements finished-->
         </p>
     </li>
     {% endfor %}

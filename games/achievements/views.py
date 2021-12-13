@@ -26,6 +26,13 @@ class GameAchievementsView(ListView):
     model = Achievement
     context_object_name = 'achievements'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(GameAchievementsView, self).get_context_data(*args, **kwargs)
+        game = Game.objects.get(slug=self.kwargs['slug'])
+        context['filtered'] = Achievement.objects.filter(game=game)
+        context['game_name'] = Game.objects.get(slug=self.kwargs['slug'])
+        return context
+
 
 def change_achievement_status(request, pk):
     achievement = Achievement.objects.get(pk=pk)
@@ -38,7 +45,7 @@ def change_achievement_status(request, pk):
     return HttpResponseRedirect(reverse_lazy('achiev', kwargs={'pk': game.id}))
 
 
-def upload_to_database(request):
+def upload_to_database(request, name):
     from django.utils.text import slugify
     import requests
 
@@ -52,7 +59,7 @@ def upload_to_database(request):
         return render(request, template_name='status_code.html', context={'status_code': get_api.status_code})
 
     achievements = (get_api.json()['game']["availableGameStats"]["achievements"])
-    game = Game.objects.get(name="Dark Souls")
+    game = Game.objects.get(name=name)
 
     from django.core.exceptions import ObjectDoesNotExist
     for index in achievements:
@@ -71,11 +78,11 @@ def upload_to_database(request):
                                        description=description,
                                        slug=slugify(index["displayName"]))
 
-    return render(request, template_name='games_all_achiev.html', context={'achievements': Achievement.objects.all()})
+    return render(request, template_name='games.html', context={'games': Game.objects.all()})
 
 
-def get_achievements(request):
-    return render(request, template_name="get_achievements.html")
+def get_achievements(request, name):
+    return render(request, template_name="get_achievements.html", context={'name': name})
 
 
 def games(request):

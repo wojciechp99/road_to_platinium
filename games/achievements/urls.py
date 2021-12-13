@@ -3,11 +3,11 @@ from .views import games, GameAchievementsView, AchievementUpdateView, change_ac
     upload_to_database, get_achievements
 
 urlpatterns = [
-    path('game/<int:pk>', GameAchievementsView.as_view(), name="achiev"),
+    path('game/<int:pk>/<str:slug>', GameAchievementsView.as_view(), name="achiev"),
     path('achiev/update/<int:pk>', AchievementUpdateView.as_view(), name='achiev-update'),
-    path('<int:pk>/change-achievement-status', change_achievement_status, name='change-status'),
+    path('change-achievement-status/<int:pk>', change_achievement_status, name='change-status'),
     path('achiev/<int:pk>', AchievementDetailView.as_view(), name='achiev-detail'),
-    path("upload-achievements", upload_to_database, name='upload-achievements'),
-    path('get-achievements-from-steam', get_achievements, name='get_achievements'),
+    path("upload-achievements/<str:name>", upload_to_database, name='upload-achievements'),
+    path('get-achievements-from-steam/<str:name>', get_achievements, name='get_achievements'),
     path('', games, name='index'),
 ]

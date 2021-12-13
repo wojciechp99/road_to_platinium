@@ -20,21 +20,14 @@ $(document).ready(function () {
 
   });
 </script>
-
 <div>
     <div>
         <h1>
-            {% with achievement=achievements|first %}
-                {% if achievement.game %}
-                    {{ achievement.game }}
-                {% else %}
-                    Upload your achievements:
-                {% endif %}
-            {% endwith %}
+            {{ game_name }}
         </h1>
     </div>
     <div>
-        <a class="btn btn-primary" href="{% url 'get_achievements' %}">Upload achievements from
+        <a class="btn btn-primary" href="{% url 'get_achievements' name=game_name %}">Upload achievements from
             Steam</a>
     </div>
 </div>
@@ -53,7 +46,7 @@ $(document).ready(function () {
     </tr>
     </thead>
     <tbody>
-    {% for achievement in achievements %}
+    {% for achievement in filtered %}
     <tr>
         <th style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</th>
         <td style="text-align: center; vertical-align: middle;">
