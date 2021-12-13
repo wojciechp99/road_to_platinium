@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Games
+Home
 {% endblock %}
 
 
@@ -29,6 +29,7 @@ $(document).ready(function () {
     <div>
         <a class="btn btn-primary" href="{% url 'get_achievements' name=game_name %}">Upload achievements from
             Steam</a>
+        <a style="float: right;" class="btn btn-danger" href="{% url 'delete-game' pk=game_name.id %}">Delete Game</a>
     </div>
 </div>
 <hr>

@@ -1,10 +1,23 @@
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView, DetailView
+from django.views.generic import ListView, UpdateView, DeleteView, DetailView, CreateView
 
 from .models import Game, Achievement
 from .forms import AchievementForm
+
+
+class GameDeleteView(DeleteView):
+    template_name = 'game_delete.html'
+    model = Game
+    success_url = reverse_lazy('index')
+
+
+class GameCreateView(CreateView):
+    template_name = 'forms.html'
+    model = Game
+    fields = ['name']
+    success_url = reverse_lazy('index')
 
 
 class AchievementDetailView(DetailView):
@@ -42,7 +55,7 @@ def change_achievement_status(request, pk):
         achievement.completed = True
     achievement.save()
     game = Game.objects.get(name=achievement.game)
-    return HttpResponseRedirect(reverse_lazy('achiev', kwargs={'pk': game.id}))
+    return HttpResponseRedirect(reverse_lazy('achiev', kwargs={'pk': game.id, 'slug': game.slug}))
 
 
 def upload_to_database(request, name):
